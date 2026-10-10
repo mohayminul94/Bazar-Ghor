@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { useEffect, useState, use } from "react";
 
 
@@ -69,7 +70,7 @@ export default function CategoryPage({ params }) {
         
 
         <div className="bg-[#f8faf8] border border-[#e8eee9] rounded-[24px] p-6 shadow-sm flex items-center gap-4">
-          <div className="w-16 h-16 bg-[#f0f4f1] rounded-[20px] flex items-center justify-center text-3xl shrink-0">
+          <div className=" bg-[#f0f4f1] rounded-[20px] flex items-center justify-center text-3xl shrink-0">
             {categoryIcon}
           </div>
           <div>
@@ -106,12 +107,18 @@ export default function CategoryPage({ params }) {
         {sortedProducts.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {sortedProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
+              <Link
+                key={product.id}
+                href={`/product/${product.id}`}
+                className="block"
+              >
+                <ProductCard product={product} />
+              </Link>
             ))}
           </div>
         ) : (
           <div className="text-center py-16 bg-[#f8faf8] rounded-[24px] border border-[#e8eee9] text-gray-500">
-            এই ক্যাটাগরিতে কোনো পণ্য পাওয়া যায়নি।
+            এই ক্যাটাগরিতে কোনো পণ্য পাওয়া যায়নি।
           </div>
         )}
 
@@ -130,7 +137,7 @@ function ProductCard({ product }) {
   const isNeutral = changePct === 0;
 
   return (
-    <div className="bg-[#f8faf8] border border-[#e8eee9] rounded-[24px] p-5 w-full shadow-sm flex flex-col justify-between hover:shadow-md transition-all">
+    <div className="bg-[#f8faf8] container mx-auto border border-[#e8eee9] rounded-[24px] p-5 w-full shadow-sm flex flex-col justify-between hover:shadow-md transition-all">
       
 
       <div className="flex items-center gap-3">

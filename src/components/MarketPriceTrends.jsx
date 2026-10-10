@@ -1,7 +1,7 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
-
 
 const toBengaliNumber = (num) => {
   if (num === null || num === undefined) return "";
@@ -17,12 +17,11 @@ export default function MarketPriceTrends() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
 
-
   useEffect(() => {
     async function fetchProducts() {
       try {
         const res = await fetch(
-          "https://api.api-store.workers.dev/api/bazardor/products"
+          "https://api.api-store.workers.dev/api/bazardor/products",
         );
         const data = await res.json();
         setProducts(data);
@@ -44,17 +43,14 @@ export default function MarketPriceTrends() {
     );
   }
 
-
   const increasedProducts = products.filter(
-    (item) => item.change?.dir === "up"
-  );
-  
-  
-  const decreasedProducts = products.filter(
-    (item) => item.change?.dir === "down"
+    (item) => item.change?.dir === "up",
   );
 
-  
+  const decreasedProducts = products.filter(
+    (item) => item.change?.dir === "down",
+  );
+
   const filteredAllProducts = products.filter((product) => {
     const matchesSearch = product.nameBn
       ?.toLowerCase()
@@ -64,7 +60,6 @@ export default function MarketPriceTrends() {
     return matchesSearch && matchesCategory;
   });
 
-  
   const categories = [
     { id: "all", name: "সব পণ্য" },
     ...Array.from(new Set(products.map((p) => p.category))).map((cat) => {
@@ -75,8 +70,6 @@ export default function MarketPriceTrends() {
 
   return (
     <div className="container mx-auto px-4 py-8 space-y-14 font-sans">
-      
-      
       {increasedProducts.length > 0 && (
         <section>
           <div className="flex items-center gap-2 mb-4 text-xl font-bold text-gray-900">
@@ -86,7 +79,13 @@ export default function MarketPriceTrends() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {increasedProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
+              <Link
+                key={product.id}
+                href={`/product/${product.id}`}
+                className="block"
+              >
+                <ProductCard product={product} />
+              </Link>
             ))}
           </div>
         </section>
@@ -101,13 +100,18 @@ export default function MarketPriceTrends() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {decreasedProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
+              <Link
+                key={product.id}
+                href={`/product/${product.id}`}
+                className="block"
+              >
+                <ProductCard product={product} />
+              </Link>
             ))}
           </div>
         </section>
       )}
 
-  
       <section id="products" className="pt-6 border-t border-gray-200/60">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
           <div>
@@ -116,7 +120,6 @@ export default function MarketPriceTrends() {
               বাজারের সকল পণ্যের তালিকা এবং বর্তমান দরদাম
             </p>
           </div>
-
 
           <div className="relative w-full md:w-72">
             <input
@@ -129,7 +132,6 @@ export default function MarketPriceTrends() {
             <span className="absolute left-3.5 top-2.5 text-gray-400">🔍</span>
           </div>
         </div>
-
 
         <div className="flex items-center gap-2 overflow-x-auto pb-4 mb-6 no-scrollbar">
           {categories.map((cat) => (
@@ -147,74 +149,80 @@ export default function MarketPriceTrends() {
           ))}
         </div>
 
-
         {filteredAllProducts.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {filteredAllProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
+              <Link
+                key={product.id}
+                href={`/product/${product.id}`}
+                className="block"
+              >
+                <ProductCard product={product} />
+              </Link>
             ))}
           </div>
         ) : (
           <div className="text-center py-12 text-gray-500">
-            কোনো পণ্য পাওয়া যায়নি।
+            কোনো পণ্য পাওয়া যায়নি।
           </div>
         )}
       </section>
-
     </div>
   );
 }
 
-
 function ProductCard({ product }) {
   const name = product?.nameBn || "পণ্য";
-  const unit = product?.unit === "kg" ? "প্রতি কেজি" : `প্রতি ${product?.unit || "কেজি"}`;
+  const unit =
+    product?.unit === "kg" ? "প্রতি কেজি" : `প্রতি ${product?.unit || "কেজি"}`;
   const price = product?.today || 0;
   const changePct = product?.change?.pct || 0;
   const isIncrease = product?.change?.dir === "up";
 
   return (
-    <div className="bg-[#f8faf8] border border-[#e8eee9] rounded-[24px] p-5 w-full shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
-      
+    <Link href={`/product/${product.id}`} className="block">
+      <div className="bg-[#f8faf8] border border-[#e8eee9] rounded-[24px] p-5 w-full shadow-sm flex flex-col justify-between hover:shadow-md transition-all cursor-pointer">
+        
+        {/* আইকন ও নাম */}
+        <div className="flex items-center gap-3">
+          <div className="w-14 h-14 bg-[#f0f4f1] rounded-[18px] flex items-center justify-center shrink-0 text-3xl">
+            {product?.image || product?.categoryIcon || "🧅"}
+          </div>
 
-      <div className="flex items-center gap-3">
-        <div className="w-14 h-14 bg-[#f0f4f1] rounded-[18px] flex items-center justify-center shrink-0 text-3xl">
-          {product?.image || product?.categoryIcon || "🧅"}
-        </div>
-
-        <div>
-          <h3 className="text-xl font-bold text-[#1f2923] leading-tight">
-            {name}
-          </h3>
-          <p className="text-[#64748b] text-sm mt-0.5 font-normal">
-            {unit}
-          </p>
-        </div>
-      </div>
-
-
-      <div className="mt-6 flex items-end justify-between">
-        <div>
-          <span className="text-[#64748b] text-xs block mb-1">
-            আজকের দাম
-          </span>
-          <div className="text-2xl font-black text-[#1a231e] tracking-tight">
-            {toBengaliNumber(price)} <span className="font-bold text-xl">টাকা</span>
+          <div>
+            <h3 className="text-xl font-bold text-[#1f2923] leading-tight">
+              {name}
+            </h3>
+            <p className="text-[#64748b] text-sm mt-0.5 font-normal">
+              {unit}
+            </p>
           </div>
         </div>
 
-        <div
-          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-bold ${
-            isIncrease
-              ? "bg-[#f4ebeb] text-[#c02626]"
-              : "bg-[#e8f5e9] text-[#1b8a43]"
-          }`}
-        >
-          <span className="text-xs">{isIncrease ? "▲" : "▼"}</span>
-          <span>{toBengaliNumber(Math.abs(changePct))}%</span>
-        </div>
-      </div>
+        {/* দাম ও পার্সেন্টেজ পিল */}
+        <div className="mt-6 flex items-end justify-between">
+          <div>
+            <span className="text-[#64748b] text-xs block mb-1">
+              আজকের দাম
+            </span>
+            <div className="text-2xl font-black text-[#1a231e] tracking-tight">
+              {toBengaliNumber(price)} <span className="font-bold text-xl">টাকা</span>
+            </div>
+          </div>
 
-    </div>
+          <div
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-bold ${
+              isIncrease
+                ? "bg-[#f4ebeb] text-[#c02626]"
+                : "bg-[#e8f5e9] text-[#1b8a43]"
+            }`}
+          >
+            <span className="text-xs">{isIncrease ? "▲" : "▼"}</span>
+            <span>{toBengaliNumber(Math.abs(changePct))}%</span>
+          </div>
+        </div>
+
+      </div>
+    </Link>
   );
 }
