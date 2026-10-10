@@ -9,8 +9,8 @@ const Navbar = () => {
           <Link href="/"><h1>BazarDor</h1></Link>
         </div>
         <div className="space-x-4">
-          <Link href="/"><button className="hover:bg-green-700 text-white font-bold py-2 px-4 rounded">সাইন ইন</button></Link>
-          <Link href="/signup"><button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">সাইন আপ</button></Link>
+          <Link href="/signIn"><button className="hover:bg-green-700 text-white font-bold py-2 px-4 rounded">সাইন ইন</button></Link>
+          <Link href="/signUp"><button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">সাইন আপ</button></Link>
         </div>
       </div>
     </div>

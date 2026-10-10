@@ -1,8 +1,11 @@
 import HeroSection from "@/components/HeroSection";
-import Image from "next/image";
+import MarketPriceTrends from "@/components/MarketPriceTrends";
 
 export default function Home() {
   return (
-    <HeroSection />
+    <>
+      <HeroSection />
+      <MarketPriceTrends />
+    </>
   );
 }
