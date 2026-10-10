@@ -69,7 +69,7 @@ export default function ProductDetailsPage({ params }) {
   if (loading) {
     return (
       <div className="min-h-[60vh] flex items-center justify-center font-sans text-gray-500">
-        Ponyer tothor load hocche...
+        পণ্য লোড হচ্ছে...
       </div>
     );
   }
@@ -77,14 +77,14 @@ export default function ProductDetailsPage({ params }) {
   if (!product) {
     return (
       <div className="min-h-[60vh] flex items-center justify-center font-sans text-gray-500">
-        Kono ponno paoya jayni.
+        কোনো পণ্য পাওয়া যায়নি।
       </div>
     );
   }
 
-  const name = product?.nameBn || "ponno";
-  const categoryName = product?.categoryNameBn || product?.category || "onnanno";
-  const unit = product?.unit === "kg" ? "proti keji" : `proti ${product?.unit || "keji"}`;
+  const name = product?.nameBn || "পণ্য";
+  const categoryName = product?.categoryNameBn || product?.category || "অন্যান্য";
+  const unit = product?.unit === "kg" ? "প্রতি কেজি" : `প্রতি ${product?.unit || "কেজি"}`;
   const price = product?.today || 0;
   const changePct = product?.change?.pct || 0;
   const isIncrease = product?.change?.dir === "up";
@@ -123,15 +123,15 @@ export default function ProductDetailsPage({ params }) {
                 {unit} - {categoryName}
               </p>
               <p className="text-xs text-gray-400 mt-1">
-                Gotokaleker tulonay aj dam {isIncrease ? "bereche" : "komeche"} - {toBengaliNumber(Math.abs(changePct))}%
+                আজকের দাম {isIncrease ? "বৃদ্ধি" : "কমে"} - {toBengaliNumber(Math.abs(changePct))}%
               </p>
             </div>
           </div>
 
           <div className="bg-white border border-[#e8eee9] rounded-2xl px-6 py-4 text-left sm:text-right w-full sm:w-auto shadow-xs">
-            <span className="text-xs text-gray-400 block">Ajker dam</span>
+            <span className="text-xs text-gray-400 block">আজকের দাম</span>
             <div className="text-2xl sm:text-3xl font-bold text-[#1a231e] mt-0.5">
-              {toBengaliNumber(price)} <span className="text-sm font-semibold text-gray-600">taka / keji</span>
+              {toBengaliNumber(price)} <span className="text-sm font-semibold text-gray-600">টাকা / কেজি</span>
             </div>
             <div className={`text-xs font-bold mt-1 flex items-center sm:justify-end gap-1 ${isIncrease ? "text-[#c02626]" : "text-[#1b8a43]"}`}>
               <span>{isIncrease ? "▲" : "▼"}</span>
@@ -141,47 +141,47 @@ export default function ProductDetailsPage({ params }) {
         </div>
 
         <div className="bg-[#f8faf8] border border-[#e8eee9] rounded-[24px] p-6 shadow-sm space-y-4">
-          <h2 className="text-lg font-bold text-[#1a231e]">Damer sarangsho</h2>
+          <h2 className="text-lg font-bold text-[#1a231e]">দামের সংখ্যা</h2>
           
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div className="bg-white border border-[#e8eee9] rounded-2xl p-5 shadow-xs">
-              <span className="text-xs text-gray-400">Sorboninmo dam</span>
+              <span className="text-xs text-gray-400">সর্বনিম্ন দাম</span>
               <div className="text-xl font-bold text-[#1b8a43] mt-1">
-                {toBengaliNumber(minPrice)} taka
+                {toBengaliNumber(minPrice)} টাকা
               </div>
-              <span className="text-[11px] text-gray-400 mt-1 block">Sobcheye kom bajarer hare</span>
+              <span className="text-[11px] text-gray-400 mt-1 block">সবচেয়ে কম বাজারের হার</span>
             </div>
 
             <div className="bg-white border border-[#e8eee9] rounded-2xl p-5 shadow-xs">
-              <span className="text-xs text-gray-400">Sorboccho dam</span>
+              <span className="text-xs text-gray-400">সর্বোচ্চ দাম</span>
               <div className="text-xl font-bold text-[#c02626] mt-1">
-                {toBengaliNumber(maxPrice)} taka
+                {toBengaliNumber(maxPrice)} টাকা
               </div>
-              <span className="text-[11px] text-gray-400 mt-1 block">Sobcheye beshi bajarer hare</span>
+              <span className="text-[11px] text-gray-400 mt-1 block">সবচেয়ে বেশি বাজারের হার</span>
             </div>
 
             <div className="bg-white border border-[#e8eee9] rounded-2xl p-5 shadow-xs">
-              <span className="text-xs text-gray-400">Gor dam</span>
+              <span className="text-xs text-gray-400">গড় দাম</span>
               <div className="text-xl font-bold text-[#1a231e] mt-1">
-                {toBengaliNumber(price)} taka
+                {toBengaliNumber(price)} টাকা
               </div>
-              <span className="text-[11px] text-gray-400 mt-1 block">Proti kejir hisebe</span>
+              <span className="text-[11px] text-gray-400 mt-1 block">প্রতি কেজির হিসেবে</span>
             </div>
           </div>
         </div>
 
         <div className="bg-[#f8faf8] border border-[#e8eee9] rounded-[24px] p-6 shadow-sm space-y-4">
-          <h2 className="text-lg font-bold text-[#1a231e]">Bazarbhittik ajker dam</h2>
+          <h2 className="text-lg font-bold text-[#1a231e]">বাজারের আজকের দাম</h2>
 
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
                 <tr className="border-b border-[#e8eee9] text-xs font-semibold text-gray-500">
-                  <th className="py-3 px-4">Bazar</th>
-                  <th className="py-3 px-4">Bibhag</th>
-                  <th className="py-3 px-4">Sorboninmo</th>
-                  <th className="py-3 px-4">Sorboccho</th>
-                  <th className="py-3 px-4">Gor</th>
+                  <th className="py-3 px-4">বাজার</th>
+                  <th className="py-3 px-4">বিভাগ</th>
+                  <th className="py-3 px-4">সর্বনিম্ন</th>
+                  <th className="py-3 px-4">সর্বোচ্চ</th>
+                  <th className="py-3 px-4">গড়</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#e8eee9] text-sm text-[#1a231e]">
@@ -191,9 +191,9 @@ export default function ProductDetailsPage({ params }) {
                     <tr key={idx} className="hover:bg-white/60 transition-colors">
                       <td className="py-3.5 px-4 font-medium">{m.market}</td>
                       <td className="py-3.5 px-4 text-gray-500">{m.division}</td>
-                      <td className="py-3.5 px-4">{toBengaliNumber(m.min)} taka</td>
-                      <td className="py-3.5 px-4">{toBengaliNumber(m.max)} taka</td>
-                      <td className="py-3.5 px-4 font-semibold">{toBengaliNumber(avgPrice)} taka</td>
+                      <td className="py-3.5 px-4">{toBengaliNumber(m.min)} টাকা</td>
+                      <td className="py-3.5 px-4">{toBengaliNumber(m.max)} টাকা</td>
+                      <td className="py-3.5 px-4 font-semibold">{toBengaliNumber(avgPrice)} টাকা</td>
                     </tr>
                   );
                 })}

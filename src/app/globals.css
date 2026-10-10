@@ -1,7 +1,11 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap');
+
 
 body {
+  font-family: 'Hind Siliguri', sans-serif;
   background-color: #F0F5F0;
+  color: #1a231e;
 }
 
 @keyframes marquee {
